@@ -3,6 +3,7 @@ import time_block
 import datetime
 import shedual_time
 import csv
+
 def time_to_index(free_block_list,time):
     time = datetime.datetime.strptime(time,"%H:%M")
     for ft in free_block_list:
@@ -113,7 +114,7 @@ if __name__ == "__main__" :
     shedual_list = []
     day_start = "6:00"
     bed_time = "22:00"
-    free_block_list=get_time_block_list(day_start,bed_time)
+    free_block_list  = get_time_block_list(day_start,bed_time)
     # for t in free_block_list:
     #     print(t.index,t.start_time,t.end_time,t.weight)
 
@@ -132,9 +133,9 @@ if __name__ == "__main__" :
     #     task.update_weight()
     #     task_list.append(task)
 
-    fixed_task_list,urgent_task_list,non_urgent_task_list =get_filtereded_object_list(task_list)
-    free_block_list,task_list,shedual_list=shedual_time.shedual_time_block_list(free_block_list,fixed_task_list,shedual_list) 
-    free_block_list,task_list,shedual_list=shedual_time.shedual_time_block_list(free_block_list,urgent_task_list,shedual_list)
+    fixed_task_list,urgent_task_list,non_urgent_task_list = get_filtereded_object_list(task_list)
+    free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,fixed_task_list,shedual_list) 
+    free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,urgent_task_list,shedual_list)
     for t in urgent_task_list:
         print(t.task_name,t.start_time,t.weight) 
     free_block_list,task_list,shedual_list=shedual_time.shedual_time_block_list(free_block_list,non_urgent_task_list,shedual_list) 

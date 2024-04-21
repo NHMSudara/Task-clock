@@ -70,7 +70,7 @@ def breck_update(free_block_list,shedual_list):
             free_block_list.remove(ft)
 
 
-        elif ft.weight >= -0.8 and ft.weight < 0:
+        elif ft.weight >= -0.8 and ft.weight <= 0:
             ft.weight = -0.75
             ft.name = "normal break"
             ft.value ="-2"
