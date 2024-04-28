@@ -11,34 +11,6 @@ def time_to_index(free_block_list,time):
             return ft.index
     return None
 
-def get_user_input(text):
-    return input(text)
-
-def get_input_according_to_value(value):
-    if value == "1" :
-        start_time = get_user_input("Enter start time: ")
-        start_time = time_to_index(free_block_list,start_time)
-        duration =get_user_input("Enter duration time : ")
-        deadline = None
-        return start_time,duration,deadline
-
-    elif value == "2" :
-        start_time = None
-        duration =get_user_input("Enter duration time : ")
-        deadline = get_user_input("Enter deadline: ")  
-        deadline = time_to_index(free_block_list,deadline)
-        return start_time,duration,deadline
-
-    elif value == "3" :
-        start_time = None
-        duration =get_user_input("Enter duration time (min): ")
-        deadline = "30"
-        return start_time,duration,deadline
-
-    else:
-        print("error in value")
-        return None,None,None
-
 def get_time_block_list(day_start,bed_time):
     start = datetime.datetime.strptime(day_start,"%H:%M")
     bed_time = datetime.datetime.strptime(bed_time,"%H:%M") 
@@ -120,25 +92,11 @@ if __name__ == "__main__" :
 
     task_list = read_tasks_from_csv("task.csv",free_block_list)
 
-
-    # while True:
-    #     task_name = get_user_input("Enter task name or  q to exit: ")
-    #     if task_name == "q" :
-    #         break
-    #     value = get_user_input("Enter value of task(1-fixed,2--urgent,3-not urgent): ")
-    #     task = task_object.TaskObject()
-    #     task.task_name = task_name
-    #     task.value = value
-    #     task.start_time,task.duration,task.deadline = get_input_according_to_value(value)
-    #     task.update_weight()
-    #     task_list.append(task)
-
     fixed_task_list,urgent_task_list,non_urgent_task_list = get_filtereded_object_list(task_list)
+
     free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,fixed_task_list,shedual_list) 
     free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,urgent_task_list,shedual_list)
-    for t in urgent_task_list:
-        print(t.task_name,t.start_time,t.weight) 
-    free_block_list,task_list,shedual_list=shedual_time.shedual_time_block_list(free_block_list,non_urgent_task_list,shedual_list) 
+    free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,non_urgent_task_list,shedual_list)
     sorted_shedual_list=sorted(shedual_list, key=lambda x: x.index)
     # print("\n")
     # for t in free_block_list:
