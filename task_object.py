@@ -7,10 +7,6 @@ class TaskObject:
     weight = None
 
 
-
-    def print_name(self):
-        print(self.name  + "add")
-
     def update_weight(self):
         if self.value =="1":
             self.deadline = 1
