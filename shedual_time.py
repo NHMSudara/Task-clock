@@ -19,13 +19,10 @@ def select_max_weight_element(task_list,free_block=False,max_task=None):
     max_element = None
     max_weight = -1000000
     for task in task_list:
-
         if max_weight <= task.weight and free_block :
             if max_task.deadline > task.index:
                 max_weight =  task.weight
                 max_element = task
-
-
         elif max_weight <= task.weight :
             max_weight =  task.weight
             max_element = task
@@ -84,13 +81,7 @@ def breck_update(free_block_list,shedual_list):
 def shedual_time_block_list(free_block_list,task_list,shedual_list) :
     while len(task_list) and len(free_block_list) :
         free_block_list = updat_free_time_block_weight(free_block_list,shedual_list)
-        #free_block_list,shedual_list = breck_update(free_block_list,shedual_list)
-        #free_block_list = updat_free_time_block_weight(free_block_list,shedual_list)
-        # if not len(free_block_list):
-        #     break
         max_weight_task = select_max_weight_element(task_list,False,None)
-        # if max_weight_task is None:
-        #     break 
         overlap = True
         if max_weight_task.value == "1":
             for ft in free_block_list:

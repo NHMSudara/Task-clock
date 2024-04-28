@@ -74,8 +74,6 @@ def read_tasks_from_csv(file_path,free_block_list):
                 
             elif   row['Start Time']== '' and  row['Deadline']== '':
                 task.value = "3"
-
-
             task.update_weight()
             task_list.append(task)
     return task_list
