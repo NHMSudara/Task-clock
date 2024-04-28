@@ -112,7 +112,7 @@ def read_tasks_from_csv(file_path,free_block_list):
 if __name__ == "__main__" :
     task_list = []
     shedual_list = []
-    day_start = "6:00"
+    day_start = "7:00"
     bed_time = "22:00"
     free_block_list  = get_time_block_list(day_start,bed_time)
     # for t in free_block_list:

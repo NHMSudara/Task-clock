@@ -6,7 +6,7 @@ def get_sum_of_previous_shedual_task(time_block_index,shedual_list):
     return sum
 
 def get_graph_value(index):
-    graph_value= [1,1,25,25,25,25,50,62,75,100,100,100,62,50,25,25,1,1,25,25,50,75,100,100,75,75,62,50,50,50,25,25,1,1]
+    graph_value= [1,1,25,25,50,62,75,100,100,100,62,50,25,25,1,1,25,25,50,75,100,100,75,75,62,50,50,50,25,25,1,1]
     return graph_value[int(index)-1]/100
 
 def updat_free_time_block_weight(free_block_list,shedual_list):
@@ -70,7 +70,7 @@ def breck_update(free_block_list,shedual_list):
             free_block_list.remove(ft)
 
 
-        elif ft.weight >= -0.8 and ft.weight <= 0:
+        elif ft.weight >= -0.8 and ft.weight <= -0.5:
             ft.weight = -0.75
             ft.name = "normal break"
             ft.value ="-2"
