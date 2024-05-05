@@ -78,6 +78,7 @@ def read_tasks_from_csv(file_path,free_block_list):
             task_list.append(task)
     return task_list
     
+ 
 
 if __name__ == "__main__" :
     task_list = []
@@ -92,34 +93,49 @@ if __name__ == "__main__" :
 
     fixed_task_list,urgent_task_list,non_urgent_task_list = get_filtereded_object_list(task_list)
 
-    free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,fixed_task_list,shedual_list) 
+    free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,fixed_task_list,shedual_list)
     free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,urgent_task_list,shedual_list)
-    free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,non_urgent_task_list,shedual_list)
+    free_block_list,task_list,shedual_list = shedual_time.shedual_time_block_list(free_block_list,non_urgent_task_list,shedual_list) 
+    shedual_list = shedual_time.assigning_remaning_block("break",free_block_list,shedual_list)
     sorted_shedual_list=sorted(shedual_list, key=lambda x: x.index)
+
+
+    # for t in sorted_shedual_list:
+    #     print(t.index,t.name)
+    # print("*********************************")
+    # for t in sorted(free_block_list, key=lambda x: x.index):
+    #     print(t.index,t.weight) 
+    # print("*********************************")   
     # print("\n")
     # for t in free_block_list:
     #     print(t.index,t.start_time,t.end_time,t.weight)
+
+
 
     for i in range(len(sorted_shedual_list)):
         if not i:
             print("---------"+"Task_name: " +sorted_shedual_list[i].name+"---------")
             print("Start Time: " + sorted_shedual_list[i].start_time.strftime("%H:%M"))
-        elif (((sorted_shedual_list[i].name != sorted_shedual_list[i-1].name) or ((sorted_shedual_list[i].name != sorted_shedual_list[i-1].name) )and (sorted_shedual_list[i].index - sorted_shedual_list[i-1].index) > 1)) and i != (len(sorted_shedual_list)-2) and i :
+
+
+        elif ((sorted_shedual_list[i].name != sorted_shedual_list[i-1].name)) and  i < len(sorted_shedual_list)-1:    
             print("End Time: " + sorted_shedual_list[i-1].end_time.strftime("%H:%M"))
             print("---------"+"Task_name: " +sorted_shedual_list[i].name+"---------")
             print("Start Time: " + sorted_shedual_list[i].start_time.strftime("%H:%M"))
-            if i == (len(sorted_shedual_list)-1):
-                print("End Time: " + sorted_shedual_list[i].end_time.strftime("%H:%M"))
+        elif i == len(sorted_shedual_list)-1 :
+            print("End Time: " + sorted_shedual_list[i].end_time.strftime("%H:%M"))
 
 
+
+        
   
         # print(sorted_shedual_list[i].name)  
         # print(sorted_shedual_list[i+1].name) 
 
 
-    for t1 in sorted_shedual_list:
-        #print(t1.task_name,t1.value,t1.start_time,t1.duration,t1.deadline) 
-        print(t1.name,t1.start_time,t1.end_time)      
+    # for t1 in sorted_shedual_list:
+    #     #print(t1.task_name,t1.value,t1.start_time,t1.duration,t1.deadline) 
+    #     print(t1.name,t1.start_time,t1.end_time)      
         
         
         

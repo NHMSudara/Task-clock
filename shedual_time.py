@@ -2,7 +2,7 @@ def get_sum_of_previous_shedual_task(time_block_index,shedual_list):
     sum = 0
     for st in shedual_list:
         if time_block_index > st.index :
-            sum = sum + (1/((st.weight*int(st.value))*10))
+            sum = sum + (1/((st.weight*int(st.value)*5)))
     return sum
 
 def get_graph_value(index):
@@ -56,30 +56,44 @@ def find_smilar_starting_time_task(task_list,task):
     return smilar_start_time_tasks
 
 
-def breck_update(free_block_list,shedual_list):
+def breck_update(free_block_list,shedual_list,break_thrashold):
     for ft in free_block_list:
 
-        if ft.weight < -0.8:
-            ft.weight = -1
+        if ft.weight < (break_thrashold-(break_thrashold*30)):
+            ft.weight = (break_thrashold-(break_thrashold*30))
             ft.name = "sleep"
             ft.value ="-1"
             shedual_list.append(ft)
             free_block_list.remove(ft)
 
 
-        elif ft.weight >= -0.8 and ft.weight <= -0.5:
-            ft.weight = -0.75
+        elif ft.weight >= (break_thrashold-(break_thrashold*30)) and ft.weight <= (break_thrashold-(break_thrashold*25)):
+            ft.weight =(break_thrashold-(break_thrashold*5))
             ft.name = "normal break"
             ft.value ="-2"
             shedual_list.append(ft)
             free_block_list.remove(ft)           
+    return free_block_list,shedual_list  
+def average_weight(free_block_list):
+    sum = 0
+    if len(free_block_list) == 0:
+        return 0
+    for ft in free_block_list:
+        sum =+ ft.weight
+    return sum/len(free_block_list)    
 
 
-
-    return free_block_list,shedual_list        
 
 def shedual_time_block_list(free_block_list,task_list,shedual_list) :
-    while len(task_list) and len(free_block_list) :
+    free_block_list = updat_free_time_block_weight(free_block_list,shedual_list)
+    break_thrashold = average_weight(free_block_list)
+    if break_thrashold < 0:
+        break_thrashold = -1*break_thrashold
+    while len(task_list) or len(free_block_list) :
+        if len(task_list) == 0:
+            break
+        if len(free_block_list) == 0:
+            break
         free_block_list = updat_free_time_block_weight(free_block_list,shedual_list)
         max_weight_task = select_max_weight_element(task_list,False,None)
         overlap = True
@@ -104,7 +118,7 @@ def shedual_time_block_list(free_block_list,task_list,shedual_list) :
         else:
 
             max_weight_free_block = select_max_weight_element(free_block_list,True,max_weight_task)  
-            if max_weight_free_block is None and len(task_list) > 1:
+            if max_weight_free_block is None and len(task_list) >= 0:
                 print("blabla")
                 print(max_weight_task.task_name)
                 task = []
@@ -126,13 +140,17 @@ def shedual_time_block_list(free_block_list,task_list,shedual_list) :
             task_list = remove_task_from_task_list(task_list,task)
             
             free_block_list = updat_free_time_block_weight(free_block_list,shedual_list)
-            free_block_list,shedual_list = breck_update(free_block_list,shedual_list)
+            free_block_list,shedual_list = breck_update(free_block_list,shedual_list,break_thrashold)
             free_block_list = updat_free_time_block_weight(free_block_list,shedual_list)
 
 
     return free_block_list,task_list,shedual_list
 
-
+def assigning_remaning_block(task_name,free_block_list,shedual_list):
+    for ft in free_block_list:
+        ft.name = task_name
+        shedual_list.append(ft)
+    return shedual_list   
 
 
 
