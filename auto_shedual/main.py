@@ -89,7 +89,7 @@ if __name__ == "__main__" :
     # for t in free_block_list:
     #     print(t.index,t.start_time,t.end_time,t.weight)
 
-    task_list = read_tasks_from_csv("task.csv",free_block_list)
+    task_list = read_tasks_from_csv("C:\\Users\\malesha\\Desktop\\Task_clock\\auto_shedual\\task.csv",free_block_list)
 
     fixed_task_list,urgent_task_list,non_urgent_task_list = get_filtereded_object_list(task_list)
 
