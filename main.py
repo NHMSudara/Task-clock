@@ -133,9 +133,9 @@ if __name__ == "__main__" :
         # print(sorted_shedual_list[i+1].name) 
 
 
-    # for t1 in sorted_shedual_list:
-    #     #print(t1.task_name,t1.value,t1.start_time,t1.duration,t1.deadline) 
-    #     print(t1.name,t1.start_time,t1.end_time)      
+    for t1 in sorted_shedual_list:
+        #print(t1.task_name,t1.value,t1.start_time,t1.duration,t1.deadline) 
+        print(t1.name,t1.start_time,t1.end_time)      
         
         
         
